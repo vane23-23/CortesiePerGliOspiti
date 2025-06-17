@@ -1,5 +1,5 @@
 class Servizio:
-    def _init_(self, codice, disponibilita, prezzo):
+    def __init__(self, codice, disponibilita, prezzo):
         self.codice = codice
         self.disponibilita = disponibilita
         self.prezzo = prezzo

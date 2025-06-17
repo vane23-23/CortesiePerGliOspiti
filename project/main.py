@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import tkinter as tk
 from tkinter import messagebox
 
-from interface import Camera
+from interface.Camera import Camera
 from interface.Cliente import Cliente
 from interface.Prenotazione import Prenotazione
 from interface.Servizio import Servizio
@@ -71,9 +71,9 @@ def disdici_prenotazione():
 
     pren = prenotazioni[-1]  # esempio: disdiciamo l'ultima
     oggi = datetime.now()
-    rimborso = pren.calcola_rimborso(oggi)
+    rimborso, stato = pren.calcolo_rimborso(oggi)
 
-    messagebox.showinfo("Disdetta", f"Prenotazione disdetta.\nRimborso: €{rimborso:.2f}")
+    messagebox.showinfo("Disdetta", f"Prenotazione disdetta.\n{stato}\nRimborso: €{rimborso:.2f}")
     prenotazioni.remove(pren)
 
 # ======== FINESTRA PRINCIPALE ========

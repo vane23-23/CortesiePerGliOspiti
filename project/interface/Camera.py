@@ -1,5 +1,5 @@
 class Camera:
-    def _init_(self, tipo):
+    def __init__(self, tipo):
         self.tipo = tipo
         if tipo == "singola":
             self.costo_giornaliero = 60

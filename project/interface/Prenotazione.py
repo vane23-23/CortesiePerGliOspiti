@@ -1,5 +1,7 @@
+from datetime import datetime
+
 class Prenotazione:
-    def _init_(self, codice, cliente, camera, data_inizio, data_fine, colazione=False):
+    def __init__(self, codice, cliente, camera, data_inizio, data_fine, colazione=False, servizi=[]):
         if data_inizio <= datetime.now():
             raise ValueError("Le prenotazioni devono essere effettuate almeno un giorno prima")
 
@@ -9,7 +11,7 @@ class Prenotazione:
         self.data_inizio = data_inizio
         self.data_fine = data_fine
         self.colazione = colazione
-        self.servizi = []
+        self.servizi = servizi
         self.pagata = False
         self.costo_totale = 0
         self.calcola_costo()
@@ -25,6 +27,21 @@ class Prenotazione:
         # Pasti
         if self.camera.tipo != "suite" and self.colazione:
             self.costo_totale += 10 * giorni
+
+    def calcolo_rimborso(self, data_rimborso):
+        giorni_diff = (self.data_inizio - data_rimborso).days
+
+        if giorni_diff >= 7:
+            rimborso = self.costo_totale
+            stato = "Rimborso totale"
+        elif 1 <= giorni_diff < 7:
+            rimborso = self.costo_totale * 0.5
+            stato = "Rimborso parziale (50%)"
+        else:
+            rimborso = 0
+            stato = "Nessun rimborso"
+
+        return rimborso, stato
 
     def disdici(self, data_attuale):
         giorni_alla_prenotazione = (self.data_inizio - data_attuale).days
